@@ -1,0 +1,42 @@
+baseURL: "http://localhost:1313/"
+languageCode: "en-us"
+title: "Hybrid Cloud Patterns"
+theme: "ananke"
+security:
+  exec:
+    allow: ["^dart-sass-embedded$", "^go$", "^npx$", "^postcss$", "^asciidoctor$"]
+
+markup:
+  asciidocExt:
+    attributes: {allow-uri-read}
+    safeMode: unsafe
+
+taxonomies:
+  industry: 'industries'
+  product: 'products'
+  tag: 'tags'
+
+sectionPagesMenu: main
+
+menu:
+  main:
+  - identifier: patterns
+    name: Get Patterns
+    title: Patterns
+    url: /patterns/
+    weight: 10
+  - identifier: learn
+    name: Learn
+    title: Learn
+    url: /learn/
+    weight: 20
+  - identifier: contribute
+    name: Contribute
+    title: Contribute
+    url: /contribute/
+    weight: 30
+  - identifier: blog
+    name: Blog
+    title: Blog
+    url: /blog/
+    weight: 40
