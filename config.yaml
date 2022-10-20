@@ -1,42 +1,25 @@
-baseURL: "http://localhost:1313/"
+baseURL: "https://abhatt-rh.github.io/patterns-docs/"
 languageCode: "en-us"
 title: "Hybrid Cloud Patterns"
 theme: "ananke"
 security:
   exec:
+    osEnv:
+    - (?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|HOME)$
     allow: ["^dart-sass-embedded$", "^go$", "^npx$", "^postcss$", "^asciidoctor$"]
-
+    
 markup:
   asciidocExt:
-    attributes: {allow-uri-read}
+    attributes: {} #allow-uri-read
     safeMode: unsafe
+    backend: html5
+    extensions: []
+    failureLevel: fatal
+    noHeaderOrFooter: true
+    preserveTOC: true
+    safeMode: unsafe
+    sectionNumbers: true
+    trace: true
+    verbose: true
+    workingFolderCurrent: false
 
-taxonomies:
-  industry: 'industries'
-  product: 'products'
-  tag: 'tags'
-
-sectionPagesMenu: main
-
-menu:
-  main:
-  - identifier: patterns
-    name: Get Patterns
-    title: Patterns
-    url: /patterns/
-    weight: 10
-  - identifier: learn
-    name: Learn
-    title: Learn
-    url: /learn/
-    weight: 20
-  - identifier: contribute
-    name: Contribute
-    title: Contribute
-    url: /contribute/
-    weight: 30
-  - identifier: blog
-    name: Blog
-    title: Blog
-    url: /blog/
-    weight: 40
