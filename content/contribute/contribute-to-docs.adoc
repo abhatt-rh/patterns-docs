@@ -4,11 +4,11 @@ title: Contributor's guide
 menu: contribute
 weight: 60
 ---
+:toc: macro
+:toc-title:
+:toclevels: 1
 
-:toc:
-:toclevels: 4
-
-= Contributor's guide
+toc::[]
 
 Use the Contributor's guide to learn about ways to contribute to the Hybrid Cloud Patterns, to understand the prerequisites and toolchain required for contribution, and to follow some basic documentation style and structure guidelines.
 
