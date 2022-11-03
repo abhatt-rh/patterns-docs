@@ -59,9 +59,7 @@ jobs:
           hugo --minify
 
       - name: Run Vale
-        uses: actions/checkout@v2
         uses: errata-ai/vale-action@reviewdog
-          - vale_flags: "--minAlertLevel=error"
 
       # Commenting out the OCP process for assessing later
       #- name: "Run Vale against PR asciidoc files"
