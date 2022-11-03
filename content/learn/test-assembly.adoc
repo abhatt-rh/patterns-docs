@@ -1,0 +1,17 @@
+---
+layout: default
+title: Test Assembly
+menu: learn
+weight: 60
+---
+
+:toc:
+:toclevels: 4
+
+= Test Assembly
+
+Some intro text
+
+include::modules/test-mod-1.adoc[leveloffset=+1]
+
+include::modules/test-mod-2.adoc[leveloffset=+1]

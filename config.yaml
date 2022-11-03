@@ -2,6 +2,10 @@ baseURL: "https://abhatt-rh.github.io/patterns-docs/"
 languageCode: "en-us"
 title: "Hybrid Cloud Patterns"
 theme: "patternfly"
+summaryLength: 20
+paginate: 5
+params:
+  site_logo: hybrid_cloud_patterns.png
 security:
   exec:
     osEnv:
