@@ -12,6 +12,6 @@ toc::[]
 
 Use the Contributor's guide to learn about ways to contribute to the Hybrid Cloud Patterns, to understand the prerequisites and toolchain required for contribution, and to follow some basic documentation style and structure guidelines.
 
-include::modules/contributing.adoc[leveloffset=+2]
-include::modules/tools_and_setup.adoc[leveloffset=+2]
-include::modules/doc_guidelines.adoc[leveloffset=+2]
+include::modules/contributing.adoc[leveloffset=+1]
+include::modules/tools_and_setup.adoc[leveloffset=+1]
+include::modules/doc_guidelines.adoc[leveloffset=+1]
