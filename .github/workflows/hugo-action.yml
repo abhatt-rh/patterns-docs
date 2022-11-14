@@ -61,7 +61,7 @@ jobs:
       #- name: Run Vale
         #uses: errata-ai/vale-action@reviewdog
         #name: reviewdog
-on: [pull_request]
+#on: [pull_request]
 
 jobs:
   vale:
