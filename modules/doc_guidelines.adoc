@@ -67,7 +67,14 @@ See, xref:doc_guidelines.adoc#assembly-file-metadata[Assembly file metadata] and
 Use lowercase. For directory with a multiple-word name, use lowercase separated by dash, for example `multicloud-gitops`.
 
 == Language and grammar
-Use present tense. Use active voice. Use second person (you). Avoid first person (I, we, us). Be gender neutral. Use the appropriate tone. Write for a global audience.
+Consider the following guidelines:
+* Use present tense.
+* Use active voice.
+* Use second person (you).
+* Avoid first person (I, we, us).
+* Be gender neutral.
+* Use the appropriate tone.
+* Write for a global audience.
 
 == Titles and headings
 Use sentence-style capitalization in all titles and section headings. Ensure that titles focus on customer tasks instead of the product.
