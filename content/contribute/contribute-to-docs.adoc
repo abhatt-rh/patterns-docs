@@ -5,6 +5,9 @@ menu: contribute
 weight: 60
 ---
 
+:toc:
+:toclevels: 1
+
 Use the Contributor's guide to learn about ways to contribute to the Hybrid Cloud Patterns, to understand the prerequisites and toolchain required for contribution, and to follow some basic documentation style and structure guidelines.
 
 include::modules/contributing.adoc[leveloffset=+1]
