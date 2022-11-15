@@ -1,13 +1,10 @@
 [id="contributing-to-docs-tools-and-setup"]
 = Install and set up the tools and software
 :icons:
-:toc: macro
-:toc-title:
-:toclevels: 1
+
 :linkattrs:
 :description: How to set up and install the tools to contribute
 
-toc::[]
 
 == Create a GitHub account
 Before you can contribute to Hybrid Cloud Patterns documentation, you must

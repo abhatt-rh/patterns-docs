@@ -1,12 +1,8 @@
 [id="contributing-to-docs-doc-guidelines"]
 = Documentation guidelines
-:toc: macro
-:toc-title:
-:toclevels: 3
+
 :description: Documentation guidelines for contributing to the Hybrid Cloud Patterns Docs
 :imagesdir: ../images
-
-toc::[]
 
 == General guidelines
 When authoring content, follow these style guides:

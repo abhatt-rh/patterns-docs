@@ -1,13 +1,9 @@
 [id="contributing-to-docs-contributing"]
 = Contribute to Hybrid Cloud Patterns documentation
 :icons:
-:toc: macro
-:toc-title:
-:toclevels: 1
 :description: Contribute to Hybrid Cloud Patterns documentation
 :imagesdir: ../images
 
-toc::[]
 
 == Different ways to contribute
 
