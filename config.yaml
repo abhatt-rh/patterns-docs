@@ -19,28 +19,11 @@ markup:
   asciidocExt:
     attributes:
       - allow-uri-read: ''
-      - toc: ''
-      - docinfo: shared
-      - nofooter: ''
-      - skip-front-matter: ''
-      - library: asciidoctor-ruby
-      - icons: font
-      - sectlinks: ''
-      - sectanchors: ''
-      - figure-caption!: ''
-      - source-highlighter: highlightjs
-      - experimental: 'true'
     safeMode: unsafe
-    backend: html5
-    extensions: []
-    failureLevel: fatal
-    noHeaderOrFooter: true
-    preserveTOC: true
-    safeMode: unsafe
-    sectionNumbers: true
-    trace: true
-    verbose: true
-    workingFolderCurrent: false
+  tableOfContents:
+    startLevel: 1
+    endLevel: 2
+    ordered: false
 
 taxonomies:
   industry: 'industries'
