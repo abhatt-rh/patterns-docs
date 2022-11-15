@@ -63,8 +63,12 @@ jobs:
         with:
           fail_on_error: false
           vale_flags: "--no-exit"
-          files: __onlyModified
+          #files: _onlyModified
           onlyAnnotateModifiedLines: true
+        env:
+          # Required, set by GitHub actions automatically:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       # Commenting out the OCP process for assessing later
       #- name: "Run Vale against PR asciidoc files"
