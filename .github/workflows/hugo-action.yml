@@ -60,6 +60,11 @@ jobs:
 
       - name: Vale Linter
         uses: errata-ai/vale-action@v2.0.1
+        with:
+          fail_on_error: false
+          vale_flags: "--no-exit"
+          files: __onlyModified
+          onlyAnnotateModifiedLines: true
 
       # Commenting out the OCP process for assessing later
       #- name: "Run Vale against PR asciidoc files"
