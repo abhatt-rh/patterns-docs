@@ -8,9 +8,9 @@
 When authoring content, follow these style guides:
 
 * link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Supplementary Style Guide]
-* link:https://www.ibm.com/docs/en/ibm-style[IBM Style Guide], especially link:https://www.ibm.com/docs/en/ibm-style?topic=word-usage[word usage]
+* link:https://www.ibm.com/docs/en/ibm-style[IBM Style], especially link:https://www.ibm.com/docs/en/ibm-style?topic=word-usage[word usage]
 +
-NOTE: Use your Red Hat e-mail when asked for IBMid
+NOTE: When asked for an IBM I, Red Hat associates can use their Red Hat e-mail.
 * link:https://redhat-documentation.github.io/modular-docs/#writing-mod-docs[Modular documentation reference guide]
 ** link:https://github.com/redhat-documentation/modular-docs/tree/main/modular-docs-manual/files[Modular documentation templates]
 
@@ -66,8 +66,8 @@ Use lowercase. For directory with a multiple-word name, use lowercase separated 
 Consider the following guidelines:
 * Use present tense.
 * Use active voice.
-* Use second person (you).
-* Avoid first person (I, we, us).
+* Use second person perspective (you).
+* Avoid first person perspective (I, we, us).
 * Be gender neutral.
 * Use the appropriate tone.
 * Write for a global audience.
@@ -75,7 +75,7 @@ Consider the following guidelines:
 == Titles and headings
 Use sentence-style capitalization in all titles and section headings. Ensure that titles focus on customer tasks instead of the product.
 
-For assemblies and task modules, use a gerund form in headings, such as:
+For assemblies and procedure modules, use a gerund form in headings, such as:
 
 * Creating
 * Managing
@@ -115,7 +115,7 @@ Every assembly file should contain the following metadata at the top, with no li
 include::_common-docs/common-attributes.adoc[]                   <4>
 :context: <unique-context-for-assembly>                         <5>
                                                                 <6>
-toc::[]                                                         <7>
+:toc:                                                         <7>
 ----
 
 <1> The content type for the file. For assemblies, always use `:_content-type: ASSEMBLY`. Place this attribute before the anchor ID or, if present, the conditional that contains the anchor ID.

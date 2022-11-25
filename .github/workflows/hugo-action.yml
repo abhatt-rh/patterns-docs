@@ -4,9 +4,9 @@ name: Deploy Hugo site to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: [main]
   pull_request:
-    branches:
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -57,14 +57,6 @@ jobs:
         run: |
           alias asciidoctor="asciidoctor --attribute=experimental=true --attribute=icons=font"
           hugo --minify
-
-      - name: Vale Linter
-        uses: errata-ai/vale-action@v2.0.1
-        with:
-          fail_on_error: false
-          vale_flags: "--no-exit"
-          files: __onlyModified
-          onlyAnnotateModifiedLines: true
 
       # Commenting out the OCP process for assessing later
       #- name: "Run Vale against PR asciidoc files"

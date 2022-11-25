@@ -64,8 +64,8 @@ The following are minimum requirements:
 * An editor that can strip trailing whitespace
 * An https://docs.asciidoctor.org/asciidoctor/latest/install/[installer]
 
-#Install Hugo
+//to-do: Add instructions to "Install Hugo"
 
-#Deploy Hugo as a container image
+//to-do: Add instructions "Deploy Hugo as a container image"
 
 

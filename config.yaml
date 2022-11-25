@@ -17,8 +17,7 @@ security:
 
 markup:
   asciidocExt:
-    attributes:
-      - allow-uri-read: ''
+    attributes: {allow-uri-read}
     safeMode: unsafe
   tableOfContents:
     startLevel: 1
@@ -28,7 +27,7 @@ markup:
 taxonomies:
   industry: 'industries'
   product: 'products'
-  tag: 'tags'
+  blog_tag: 'blog_tags'
 
 sectionPagesMenu: main
 
