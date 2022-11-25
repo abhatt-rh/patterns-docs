@@ -58,26 +58,6 @@ jobs:
           alias asciidoctor="asciidoctor --attribute=experimental=true --attribute=icons=font"
           hugo --minify
 
-      - name: Vale Linter
-        uses: errata-ai/vale-action@v2.0.1
-        with:
-          fail_on_error: false
-          vale_flags: "--no-exit"
-          files: __onlyModified
-          onlyAnnotateModifiedLines: true
-
-      # Commenting out the OCP process for assessing later
-      #- name: "Run Vale against PR asciidoc files"
-      #- before_script:
-      #  - gem install asciidoctor
-      #- script:
-      #  - travis_retry wget https://github.com/errata-ai/vale/releases/download/v2.20.1/vale_2.20.1_Linux_64-bit.tar.gz --retry-connrefused
-      #  - mkdir bin && tar -xvzf vale_2.20.1_Linux_64-bit.tar.gz -C bin
-      #  - export PATH=./bin:"$PATH"
-      #  - travis_retry vale sync # pull down VRH rules package
-      #  - chmod +x ./scripts/check-with-vale.sh
-      #  - travis_retry ./scripts/check-with-vale.sh $TRAVIS_PULL_REQUEST $TRAVIS_PULL_REQUEST_SHA
-
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
