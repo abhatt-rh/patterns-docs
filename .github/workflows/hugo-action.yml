@@ -73,11 +73,36 @@ jobs:
         with:
           path: ./public
 
-      - name: runner / vale
-        runs-on: ubuntu-latest
-        steps:
-         - uses: actions/checkout@v3
-         - uses: errata-ai/vale-action@reviewdog
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
+
+name: reviewdog
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: [main]
+  pull_request:
+    branches:
+
+jobs:
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: errata-ai/vale-action@reviewdog
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
@@ -100,15 +125,3 @@ jobs:
           filter_mode: # optional, default is added
     # Space-delimited list of flags for the Vale CLI.
           vale_flags: # optional, default is ""
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
