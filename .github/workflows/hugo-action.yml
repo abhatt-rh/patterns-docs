@@ -87,14 +87,9 @@ jobs:
         uses: actions/deploy-pages@v1
 
 
-name: reviewdog
+  name: reviewdog
+  on:
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: [main]
-  pull_request:
-    branches:
 
 jobs:
   vale:
