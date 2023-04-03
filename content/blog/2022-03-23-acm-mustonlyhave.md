@@ -1,11 +1,11 @@
 ---
-layout: post
 date: 2022-03-23
 title: To musthave or to mustonlyhave
-excerpt: ACM has multiple enforcement strategies, be careful which one you use
-published: true
-tags:
+summary: ACM has multiple enforcement strategies, be careful which one you use
+author: Michele Baldessari
+blog_tags:
 - acm
+aliases: /2022/03/23/acm-mustonlyhave/
 ---
 
 Recently a user reported an issue when using the multicloud-gitops pattern: Namely, after testing changes in a feature branch (adding a helm application), said changes were not appearing on the remote clusters.

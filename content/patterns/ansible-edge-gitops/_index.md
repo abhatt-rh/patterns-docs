@@ -1,12 +1,32 @@
 ---
-layout: default
 title: Ansible Edge GitOps
-parent: Patterns
-icon: ansible.jpg
-summary: This pattern uses OpenShift-based Ansible Automated Platform deployment and OpenShift Virtualization to simulate the Edge environment for VMs.
-has_children: true
-nav_order: 1
+date: 2022-06-08
+validated: true
+summary: This pattern uses OpenShift Virtualization to simulate an edge environment for VMs.
+products:
+- Red Hat OpenShift Container Platform
+- Red Hat Ansible Automation Platform
+- Red Hat OpenShift Virtualization
+- Red Hat Enterprise Linux
+- Red Hat OpenShift Data Foundation
+industries:
+- Chemical
+aliases: /ansible-edge-gitops/
 ---
+
+<div class="pattern_logo">
+  <img src="/images/logos/ansible-edge.png" class="pattern_logo" alt="Points">
+</div>
+
+{{< iframe "https://util.hybrid-cloud-patterns.io/dashboard.php?pattern=aegitops" >}}
+
+# Ansible Edge GitOps
+
+{{% button text="Install" url="getting-started" color-class="btn-green" %}}
+{{% button text="Help & Feedback" url="https://groups.google.com/g/hybrid-cloud-patterns" %}}
+{{% button text="Report Bugs" url="https://github.com/hybrid-cloud-patterns/ansible-edge-gitops/issues" color-class="btn-red" %}}
+
+## Background
 
 Organizations are interested in accelerating their deployment speeds and improving delivery quality in their Edge environments, where many devices may not fully or even partially embrace the GitOps philosophy. Further, there are VMs and other devices that can and should be managed with Ansible. This pattern explores some of the possibilities of using an OpenShift-based Ansible Automated Platform deployment and managing Edge devices, based on work done with a partner in the Chemical space.
 
@@ -38,7 +58,7 @@ Similar to other patterns, this pattern starts with a central management hub, wh
 
 ### Logical architecture
 
-![Ansible-Edge-Gitops-Architecture](../images/ansible-edge-gitops/ansible-edge-gitops-arch.png)
+![Ansible-Edge-Gitops-Architecture](/images/ansible-edge-gitops/ansible-edge-gitops-arch.png)
 
 ### Physical Architecture
 

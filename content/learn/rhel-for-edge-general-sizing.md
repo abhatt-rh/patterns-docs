@@ -1,10 +1,13 @@
 ---
-layout: default
+menu:
+  learn:
+    parent: Infrastructure
 title: RHEL for Edge General Sizing
-parent: Infrastructure
-menu: learn
-weight: 30
+weight: 32
+aliases: /infrastructure/rhel-for-edge-general-sizing/
 ---
+
+# RHEL for Edge General Sizing
 
 ## Recommended node host practices
 

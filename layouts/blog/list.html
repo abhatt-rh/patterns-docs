@@ -2,8 +2,8 @@
 <main class="pf-c-page__main ">
   <section class="pf-c-page__main-section ">
     <div class="pf-u-text-align-center">
-      <div class="pf-c-content" style="--pf-c-content--FontSize: 1.25rem;">
-        <h1>
+      <div class="pf-c-content" style="--pf-c-content--FontSize: 1rem;">
+        <h1 class="pf-c-title pf-m-4xl">
           {{- .Title -}}
         </h1>
         {{ .Content }}
@@ -11,24 +11,22 @@
     </section>
     <section class="pf-c-page__main-section">
     <div class="pf-l-grid pf-m-gutter">
-
       <div class="pf-l-grid__item pf-m-10-col">
         <div class="pf-c-content" >
-          <div>
-            {{ $section := where $.Paginator.Pages "Section" "blog"}}
-            {{ range $section }}
-              <div >
-                {{ .Render "summary" }}
-              </div>
-            {{ end }}
-            {{ partial "paginator.html" . }}
-          </div>
+          {{ $section := where $.Paginator.Pages "Section" "blog"}}
+          {{ range $section }}
+            <div >
+              {{ .Render "summary" }}
+            </div>
+          {{ end }}
+          {{ partial "paginator.html" . }}
         </div>
       </div>
       <div class="pf-l-grid__item pf-m-2-col">
-        {{ partial "tags.html" . }}
+        {{ partial "tags-blog.html" . }}
       </div>
     </div>
   </section>
+  {{ partial "footer.html" . }}
 </main>
 {{ end }}

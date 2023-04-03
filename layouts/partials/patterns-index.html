@@ -1,6 +1,6 @@
 <div class="pf-c-page__sidebar">
   <div class="pf-c-page__sidebar-body">
-    {{ partial "patterns-menu.html" . }}
+    {{ partial "menu-patterns.html" . }}
   </div>
 </div>
 <main class="pf-c-page__main">
@@ -8,23 +8,21 @@
     <div class="pf-l-grid pf-m-gutter">
       <div class="pf-l-grid__item pf-m-8-col">
         <div class="pf-c-content">
-          {{ $validated := .Param "validated" }}
-          {{ if (eq $validated true ) }}
-              {{ partial "validated-pattern.html" . }}
-          {{ else }}
-              {{ partial "community-pattern.html" . }}
-          {{ end }}
-          <h1>
-            {{- .Title -}}
-          </h1>
+          <div class="pattern-label">
+            {{ $validated := .Param "validated" }}
+            {{ if (eq $validated true ) }}
+              {{ partial "label-validated-pattern.html" . }}
+            {{ else }}
+              {{ partial "label-community-pattern.html" . }}
+            {{ end }}
+          </div>
           <div class="pf-c-content">
             {{ .Content }}
           </div>
         </div>
       </div>
-      <div class="pf-l-grid__item pf-m-4-col">
         {{ partial "toc.html" . }}
-      </div>
     </div>
   </section>
+  {{ partial "footer.html" . }}
 </main>

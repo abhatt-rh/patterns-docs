@@ -1,12 +1,12 @@
 ---
-layout: post
 date: 2022-06-30
 title: Ansible Edge GitOps
-excerpt: A validated pattern that introduces Ansible and Virtualization to the framework
-published: true
-tags:
+summary: A validated pattern that introduces Ansible and Virtualization to the framework
+author: Martin Jackson
+blog_tags:
 - ansible-edge-gitops
 - patterns
+aliases: /2022/06/30/ansible-edge-gitops/
 ---
 
 # Validated Pattern: Ansible Edge GitOps

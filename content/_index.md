@@ -1,8 +1,8 @@
 ---
 title: "Hybrid Cloud Patterns"
-date: 2022-08-18T15:11:15+10:00
-featured_image: logo.png
 ---
+
+![Logo](/images/logo.png)
 
 # Reference architectures with added value
 

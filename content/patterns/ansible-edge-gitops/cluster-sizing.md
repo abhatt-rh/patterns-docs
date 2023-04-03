@@ -1,18 +1,9 @@
 ---
-layout: default
 title: Cluster Sizing
-grand_parent: Patterns
-parent: Ansible Edge GitOps
-nav_order: 3
+weight: 30
+aliases: /ansible-edge-gitops/cluster-sizing/
 ---
 # OpenShift Cluster Sizing for the Ansible Edge GitOps Pattern
-
-## Table of contents
-
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
 
 ## Tested Platforms
 

@@ -1,41 +1,40 @@
-baseURL: "https://abhatt-rh.github.io/patterns-docs/"
+baseURL: "https://hybrid-cloud-patterns.io"
 languageCode: "en-us"
-title: "Hybrid Cloud Patterns"
+title: Hybrid Cloud Patterns
 theme: "patternfly"
 summaryLength: 20
-paginate: 5
+paginate: 6
 params:
-  site_logo: hybrid_cloud_patterns.png
+  site_logo: /images/hybrid_cloud_patterns.png
 security:
   exec:
-    osEnv:
-    - (?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|HOME)$
     allow: ["^dart-sass-embedded$", "^go$", "^npx$", "^postcss$", "^asciidoctor$"]
-  funcs:
-    getenv:
-      - ^HUGO_
+    osEnv: (?i)^(GEM_PATH)$
 
 markup:
   asciidocExt:
-    attributes:
-      - allow-uri-read: ''
+    attributes: {allow-uri-read, source-highlighter: rouge, icons: font, sectanchors}
     safeMode: unsafe
+    imagesdir: images
   tableOfContents:
     startLevel: 1
-    endLevel: 2
+    endLevel: 4
     ordered: false
+  goldmark:
+    renderer:
+      unsafe: true
 
 taxonomies:
   industry: 'industries'
   product: 'products'
-  tag: 'tags'
+  blog_tag: 'blog_tags'
 
 sectionPagesMenu: main
 
 menu:
   main:
   - identifier: patterns
-    name: Get Patterns
+    name: Patterns
     title: Patterns
     url: /patterns/
     weight: 10

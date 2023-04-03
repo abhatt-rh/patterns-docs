@@ -1,10 +1,13 @@
 ---
-layout: default
+menu:
+  learn:
+    parent: Infrastructure
 title: OpenShift General Sizing
-parent: Infrastructure
-menu: learn
-weight: 20
+weight: 31
+aliases: /infrastructure/ocp-cluster-general-sizing/
 ---
+
+# OpenShift General Sizing
 
 ## Recommended node host practices
 
@@ -12,17 +15,17 @@ The OpenShift Container Platform node configuration file contains important opti
 
 When both options are in use, the lower of the two values limits the number of pods on a node. Exceeding these values can result in:
 
--   Increased CPU utilization.
--   Slow pod scheduling.
--   Potential out-of-memory scenarios, depending on the amount of memory in the node.
--   Exhausting the pool of IP addresses.
--   Resource overcommitting, leading to poor user application performance.
+- Increased CPU utilization.
+- Slow pod scheduling.
+- Potential out-of-memory scenarios, depending on the amount of memory in the node.
+- Exhausting the pool of IP addresses.
+- Resource overcommitting, leading to poor user application performance.
 
 In Kubernetes, a pod that is holding a single container actually uses two containers. The second container is used to set up networking prior to the actual container starting. Therefore, a system running 10 pods will actually have 20 containers running.
 
 **podsPerCore** sets the number of pods the node can run based on the number of processor cores on the node. For example, if  **podsPerCore**  is set to  `10`  on a node with 4 processor cores, the maximum number of pods allowed on the node will be  `40`.
 
-```
+```yaml
 kubeletConfig:
   podsPerCore: 10
 ```
@@ -31,7 +34,7 @@ Setting  **podsPerCore**  to  `0`  disables this limit. The default is  `0`.  **
 
 **maxPods**  sets the number of pods the node can run to a fixed value, regardless of the properties of the node.
 
-```
+```yaml
  kubeletConfig:
     maxPods: 250
 ```
@@ -42,24 +45,15 @@ For more information about sizing and Red Hat standard host practices see the [O
 
 The control plane node resource requirements depend on the number of nodes in the cluster. The following control plane node size recommendations are based on the results of control plane density focused testing. The control plane tests create the following objects across the cluster in each of the namespaces depending on the node counts:
 
--   12 image streams
-
--   3 build configurations
-
--   6 builds
-
--   1 deployment with 2 pod replicas mounting two secrets each
-
--   2 deployments with 1 pod replica mounting two secrets
-
--   3 services pointing to the previous deployments
-
--   3 routes pointing to the previous deployments
-
--   10 secrets, 2 of which are mounted by the previous deployments
-
--   10 config maps, 2 of which are mounted by the previous deployments
-
+- 12 image streams
+- 3 build configurations
+- 6 builds
+- 1 deployment with 2 pod replicas mounting two secrets each
+- 2 deployments with 1 pod replica mounting two secrets
+- 3 services pointing to the previous deployments
+- 3 routes pointing to the previous deployments
+- 10 secrets, 2 of which are mounted by the previous deployments
+- 10 config maps, 2 of which are mounted by the previous deployments
 
 | Number of worker nodes |  Cluster load (namespaces) |  CPU cores |  Memory (GB)
 | :-------- | :---------- | :------------ | :------------- |

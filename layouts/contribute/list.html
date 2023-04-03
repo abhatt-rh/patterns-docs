@@ -1,13 +1,16 @@
 {{ define "main" }}
 <div class="pf-c-page__sidebar">
   <div class="pf-c-page__sidebar-body">
-    {{ partial "contribute.html" . }}
+    {{ partial "menu-contribute.html" . }}
   </div>
 </div>
 <main class="pf-c-page__main">
   <section class="pf-c-page__main-section">
     <div class="pf-l-stack pf-u-text-align-center">
-      <div class="pf-c-content" style="--pf-c-content--FontSize: 1.25rem;">
+      <div class="pf-c-content" style="--pf-c-content--FontSize: 1rem;">
+        <h1 class="pf-c-title pf-m-4xl">
+          {{- .Title -}}
+        </h1>
         {{ .Content }}
       </div>
     </div>
@@ -22,9 +25,10 @@
           </div>
           {{ end }}
         </div>
+        {{ partial "paginator.html" . }}
       </div>
-    {{- template "_internal/pagination.html" . -}}
     </div>
   </section>
+  {{ partial "footer.html" . }}
 </main>
 {{ end }}

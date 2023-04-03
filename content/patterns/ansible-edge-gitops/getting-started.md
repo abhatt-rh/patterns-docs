@@ -1,25 +1,14 @@
 ---
-layout: default
 title: Getting Started
-grand_parent: Patterns
-parent: Ansible Edge GitOps
-nav_order: 1
+weight: 10
+aliases: /ansible-edge-gitops/getting-started/
 ---
 
 # Deploying the Ansible Edge GitOps Pattern
 
-{: .no_toc }
-
-## Table of contents
-
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
 # General Prerequisites
 
-1. An OpenShift cluster ( Go to [the OpenShift console](https://console.redhat.com/openshift/create)). See also [sizing your cluster](../../multicloud-gitops/cluster-sizing). Currently this pattern only supports AWS. It could also run on a baremetal OpenShift cluster, because OpenShift Virtualization supports that; there would need to be some customizations made to support it as the default is AWS. We hope that GCP and Azure will support provisioning metal workers in due course so this can be a more clearly multicloud pattern.
+1. An OpenShift cluster ( Go to [the OpenShift console](https://console.redhat.com/openshift/create)). See also [sizing your cluster](../../ansible-edge-gitops/cluster-sizing). Currently this pattern only supports AWS. It could also run on a baremetal OpenShift cluster, because OpenShift Virtualization supports that; there would need to be some customizations made to support it as the default is AWS. We hope that GCP and Azure will support provisioning metal workers in due course so this can be a more clearly multicloud pattern.
 1. A GitHub account (and, optionally, a token for it with repositories permissions, to read from and write to your forks)
 1. The helm binary, see [here](https://helm.sh/docs/intro/install/)
 1. Ansible, which is used in the bootstrap and provisioning phases of the pattern install (and to configure Ansible Automation Platform).
@@ -42,55 +31,76 @@ in the pattern in various ways. To do this, copy the [values-secret.yaml templat
 
 ```yaml
 ---
+# NEVER COMMIT THESE VALUES TO GIT
+version: "2.0"
 secrets:
-  # NEVER COMMIT THESE VALUES TO GIT
-  kiosk-ssh:
-    username: 'Username of user to attach privatekey and publickey to - cloud-user is a typical value'
-    privatekey: 'Private ssh key of the user who will be able to elevate to root to provision kiosks'
-    publickey: 'Public ssh key of the user who will be able to elevate to root to provision kiosks'
+  - name: kiosk-ssh
+    fields:
+    - name: username
+      value: 'Username of user to attach privatekey and publickey to - cloud-user is a typical value'
+
+    - name: privatekey
+      value: 'Private ssh key of the user who will be able to elevate to root to provision kiosks'
+
+    - name: publickey
+      value: 'Public ssh key of the user who will be able to elevate to root to provision kiosks'
 ```
 
 * A Red Hat Subscription Management username and password. These will be used to register Kiosk VM templates to the Red Hat Content Delivery Network and install content on the Kiosk VMs to run the demo.
 
 ```yaml
-  rhsm:
-    username: 'username of user to register RHEL VMs'
-    password: 'password of rhsm user in plaintext'
+  - name: rhsm
+    fields:
+    - name: username
+      value: 'username of user to register RHEL VMs'
+    - name: password
+      value: 'password of rhsm user in plaintext'
 ```
 
 * Container "extra" arguments which will set the admin password for the ignition application when it's running.
 
 ```yaml
-  kiosk-extra:
+  - name: kiosk-extra
+    fields:
     # Default: '--privileged -e GATEWAY_ADMIN_PASSWORD=redhat'
-    container_extra_params: "Optional extra params to pass to kiosk ignition container, including admin password"
+    - name: container_extra_params
+      value: "Optional extra params to pass to kiosk ignition container, including admin password"
+```
+
+* A userData block to use with cloud-init. This will allow console login as the user you specify (traditionally cloud-user) with the password you specify. The value in cloud-init is used as the default; roles in the edge-gitops-vms chart can also specify other secrets to use by referencing them in the role block.
+
+```yaml
+  - name: cloud-init
+    fields:
+    - name: userData
+      value: |-
+        #cloud-config
+        user: 'username of user for console, probably cloud-user'
+        password: 'a suitable password to use on the console'
+        chpasswd: { expire: False }
 ```
 
 * A manifest file with an entitlement to run Ansible Automation Platform. This file (which will be a .zip file) will be posted to to Ansible Automation Platform instance to enable its use.  Instructions for creating a manifest file can be found [here](https://www.redhat.com/en/blog/how-create-and-use-red-hat-satellite-manifest)
 
 ```yaml
-files:
-  # Secret used for licensing Ansible Automation Platform
-  aap-manifest: 'full pathname of file containing Manfiest for entitling Ansible Automation Platform'
+  - name: aap-manifest
+    fields:
+    - name: b64content
+      path: 'full pathname of file containing Satellite Manifest for entitling Ansible Automation Platform'
+      base64: true
 ```
 
 # Prerequisites for deployment via `make install`
 
 If you are going to install via `make install` from your workstation, you will need the following tools and packages:
 
-* make
-* awk
-* sed
-* helm (v3+)
-* oc (the OpenShift client)
-* ansible
+{% include prerequisite-tools.md %}
 
-And the following ansible collections:
+And additionally, the following ansible collections:
 
 * community.okd
 * redhat_cop.controller_configuration
 * awx.awx
-* core.kubernetes
 
 To see what collections are installed:
 
@@ -220,5 +230,5 @@ As part of this pattern HashiCorp Vault has been installed. Refer to the section
 
 # Next Steps
 
-[Help & Feedback](https://groups.google.com/g/hybrid-cloud-patterns){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Report Bugs](https://github.com/hybrid-cloud-patterns/ansible-edge-gitops/issues){: .btn .btn-red .fs-5 .mb-4 .mb-md-0 .mr-2 }
+## [Help & Feedback](https://groups.google.com/g/hybrid-cloud-patterns)
+## [Report Bugs](https://github.com/hybrid-cloud-patterns/ansible-edge-gitops/issues)
