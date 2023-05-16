@@ -20,19 +20,27 @@ class Badge {
     
     getLabel(field) {
         if(field == "pattern") {
-	    return stringForKey(this.platform)+" "+this.version+" @ "+ this.date;
+	    return stringForKey(this.platform)+" "+this.version;
         }
         if(field == "platform") {
-	    return stringForKey(this.pattern)+" - "+this.version+" @ "+ this.date;
+	    return stringForKey(this.pattern)+" - "+this.version;
         }
         if(field == "version") {
-	    return stringForKey(this.pattern)+" : "+stringForKey(this.platform)+" @ "+ this.date;
+	    return stringForKey(this.pattern)+" : "+stringForKey(this.platform);
         }
 	return stringForKey(this.pattern)+" : "+ stringForKey(this.platform)+" "+this.version+" @ "+ this.date;
     }
-
+	
     getURI() {
         return this.base+"/"+this.key;
+    }
+
+    getJenkinsURI() {
+        return jenkins_base_url(this.pattern)+"/job/"+jenkins_job(this.pattern, this.platform, this.version)+"/lastBuild/";
+    }
+
+    getJiraSearch() {
+        return "https://issues.redhat.com/issues/?jql=project%3D%22Validated%20Patterns%22%20and%20labels%20in%20(ci-fail)%20and%20component%3D"+jira_component(this.pattern)+"%20and%20status%20not%20in%20(Closed)";
     }
 }
 
@@ -66,17 +74,74 @@ function rowTitle(field, value) {
 function get_shield_url(badge, label) {
     base = 'https://img.shields.io/endpoint?style=flat&logo=git&logoColor=white';
     // TODO: Replace the second link with the CI Job URL
-    base = base +'&link='+ encodeURI(badge.getURI()) + '&link=' + encodeURI(badge.getURI());
+    base = base +'&link='+ encodeURI(badge.getJenkinsURI()) + '&link=' + encodeURI(badge.getJiraSearch());
     if ( label != "" ) {
         base = base +'&label='+ encodeURI(label);
     }
     return base + '&url=' + encodeURI(badge.getURI());
 }
 
+function get_key_url(color, label) {
+    uri = 'https://hybrid-cloud-patterns.io/'+color+'.json';
+    base = 'https://img.shields.io/endpoint?style=flat&logo=git&logoColor=white';
+    // TODO: Replace the second link with the CI Job URL
+    base = base +'&link='+ encodeURI("/") + '&link=' + encodeURI(uri);
+    if ( label != "" ) {
+        base = base +'&label='+ encodeURI(label);
+    }
+    return base + '&url=' + encodeURI(uri);
+}
+
 function print_shield(bucket, badge, tag) {
     shield_url = get_shield_url(bucket, badge, tag);
     //echo "<a href='bucket/badge' rel='nofollow'><img alt='tag' src='shield_url' style='max-width: 100%;'></a><br/>";
     return "<object data="+shield_url+" style='max-width: 100%;'></object><br/>";
+}
+
+function jira_component(pattern) {
+	if ( pattern == "aegitops" ) {
+	    return "ansible-edge";
+        } else if ( pattern == "manuela" ) {
+	    return "industrial-edge";
+        } else if ( pattern == "mcgitops" ) {
+	    return "multicloud-gitops";
+        } else if ( pattern == "medicaldiag" ) {
+	    return "medical-diagnosis";
+        }
+	return pattern;
+}
+
+function jenkins_job(pattern, platform, version) {
+    ciplatform = platform
+    if ( platform == "azr" ) {
+        ciplatform = "azure";
+    }
+
+    // Work-around for CI expansion bug
+    // if ( pattern == "aegitops" ) {
+    //    return pattern+"-1.5-"+ciplatform+"-ocp"+version+"-interop";
+    // }
+    return pattern+"-"+ciplatform+"-ocp"+version+"-interop";
+}
+
+function jenkins_base_url(key) {
+    base = 'https://mps-jenkins-csb-mpqe.apps.ocp-c1.prod.psi.redhat.com/job/ValidatedPatterns';
+    if ( key == "aegitops" ) {
+	return base+'/job/AnsibleEdgeGitops';
+    }
+    if ( key == "devsecops" ) {
+	return base+'/job/MulticlusterDevSecOps';
+    }
+    if ( key == "manuela" ) {
+	return base+'/job/Manuela';
+    }
+    if ( key == "mcgitops" ) {
+	return base+'/job/MultiCloudGitops';
+    }
+    if ( key == "medicaldiag" ) {
+	return base+'/job/MedicalDiagnosis';
+    }
+    return base;
 }
 
 function pattern_url(key) {
@@ -106,13 +171,13 @@ function stringForKey(key) {
         return "DevSecOps";
     }
     if ( key == "manuela" ) {
-        return "Industrial Edge";
+        return "Industrial";
     }
     if ( key == "mcgitops" ) {
-        return "MultiCloud GitOps";
+        return "Core GitOps";
     }
     if ( key == "medicaldiag" ) {
-        return "Medical Diagnosis";
+        return "Image Classification";
     }
     if ( key == "azr" ) {
         return "Azure";
@@ -204,30 +269,60 @@ function toTitleCase(str) {
     );
 }      
 
-function createFilteredHorizontalTable(badges, field, value, titles) {
+function createKeyTable(rows) {
     //document.getElementById('data').innerHTML = 'Hello World!';
 
-    tableText = "<div style='ci-results'>";
+    tableText = "<div class='ci-key'>";
+    tableText = tableText + "<h2>Key</h2>";
+    tableText = tableText + "<table><tbody>";
+
+    tableText = tableText + "<tr>";
+    rows.forEach(r => {
+	tableText = tableText + "<td class='ci-badge'><object data='" + get_key_url(r, "") + "' style='max-width: 100%;'>&nbsp;</object>&nbsp;</td>";
+    });
+    tableText = tableText + "</tr>";
+
+    tableText = tableText + "</tbody></table></div>";
+    return tableText;
+}
+
+function createFilteredHorizontalTable(badges, field, value, titles, max = 20) {
+    //document.getElementById('data').innerHTML = 'Hello World!';
+
+    tableText = "<div style='ci-results' id='ci-"+field+"-result'>";
     if ( titles ) {
 	tableText = tableText + "<h2>"+toTitleCase("By "+field)+"</h2>";
     }
-    tableText = tableText + "<table><tbody>";
+    tableText = tableText + "<table id='ci-"+field+"-table'><tbody>";
 
     rows = getUniqueValues(badges, field);
 
     rows.forEach(r => {
 	pBadges = filterBadges(badges, field, r);
 
-	tableText = tableText + "<tr>";
+	tableText = tableText + "<tr style='vertical-align:top'>";
 	if ( value == null && field == "pattern" ) {
-	    tableText = tableText + "<td><a href='" + pattern_url(r) + "'>" + rowTitle(field, r) + "</a></td>";
-	} else if ( value == null) {
-	    tableText = tableText + "<td><a href='?" + field + "=" + r + "'>" + rowTitle(field, r) + "</a></td>";
+	    tableText = tableText + "<td class='ci-badge'><a href='" + pattern_url(r) + "'>" + rowTitle(field, r) + "</a></td><td class='ci-badge'>&nbsp;</td>";
+	} else if ( value == null ) {
+	    tableText = tableText + "<td class='ci-badge'><a href='?" + field + "=" + r + "'>" + rowTitle(field, r) + "</a></td><td class='ci-badge'>&nbsp;</td>";
 	}
-	
+
+	let index = 0;
+	if ( true ) {
+            tableText = tableText + "<td><table><tbody><tr>";
+	}
 	pBadges.forEach(b => {
-	    tableText = tableText + "<td><object data='" + get_shield_url(b, b.getLabel(field)) + "' style='max-width: 100%;'>'</object></td>";
+	    if ( pBadges.length > max && index >= max ) {
+		tableText = tableText + "</tr><tr>";
+		index = 0;
+	    }
+	    
+	    tableText = tableText + "<td class='ci-badge'><object data='" + get_shield_url(b, b.getLabel(field)) + "' style='max-width: 100%;'>'</object></td>";
+	    index = index + 1;
 	});
+	if ( true ) {
+            tableText = tableText + "</tr></tbody></table></td>";
+	}
 	tableText = tableText + "</tr>";
     });
 
@@ -237,11 +332,11 @@ function createFilteredHorizontalTable(badges, field, value, titles) {
 function createFilteredVerticalTable(badges, field, value, titles) {
     //document.getElementById('data').innerHTML = 'Hello World!';
 
-    tableText = "<div style='ci-results'>";
+    tableText = "<div style='ci-results' id='ci-"+field+"-result'>";
     if ( titles ) {
 	tableText = tableText + "<h2>"+toTitleCase("By "+field)+"</h2>";
     }
-    tableText = tableText + "<table><tbody>";
+    tableText = tableText + "<table id='ci-"+field+"-table'><tbody>";
     
     rows = getUniqueValues(badges, field);
 
@@ -251,7 +346,7 @@ function createFilteredVerticalTable(badges, field, value, titles) {
 	fieldColumns.push(filterBadges(badges, field, r));
 
 	// https://stackoverflow.com/questions/43775947/dynamically-generate-table-from-json-array-in-javascript
-	if ( value == null ) {
+	if ( value == null && field != "date" ) {
 	    tableText = tableText + "<th><a href='?" + field + "=" + r + "'>" + rowTitle(field, r) + "</a></th>";
 	}		  
     });
@@ -265,7 +360,7 @@ function createFilteredVerticalTable(badges, field, value, titles) {
 	tableText = tableText + "<tr>";
 	for ( i = 0; i < numColumns; i++) {
 	    blist = fieldColumns[i];
-	    tableText = tableText + "<td>";
+	    tableText = tableText + "<td class='ci-badge'>";
 	    if ( blist.length > row ) {
 		b = blist[row];
 		//		      console.log(b);
@@ -331,16 +426,33 @@ function processBucketXML(text, options) {
 	    badges = filterBadges(badges, filter_field, filter_value);
 	}
 	badges.sort(patternSort);
-	htmlText = createFilteredHorizontalTable(badges, filter_field, filter_value, false);
+	numElements = Math.min(Math.floor(window.innerWidth/140), 6);
+	// if ( window.innerWidth < 1200 ) {
+	//      No left or right sidebar    
+	//	numElements = Math.floor(window.innerWidth/140);
+	// } else if ( window.innerWidth < 1450 ) {
+	//      No right sidebar    
+	//	numElements = Math.floor((window.innerWidth-290)/140);
+	// } else {
+	//      Left and right sidebar, but fixed inner width
+	//	numElements = Math.floor(832/140);
+	// }
+	htmlText = createFilteredHorizontalTable(badges, filter_field, filter_value, false, numElements);
 
     } else {
+	htmlText = createKeyTable(["green", "yellow", "red"]);    
+	
+	htmlText = htmlText + "<table><tr style='vertical-align:top'><td>";    
 	badges.sort(function(a, b){return -1 * a.date.localeCompare(b.date)});
-	htmlText = createFilteredVerticalTable(badges, "date", null, true);
+	htmlText = htmlText + createFilteredVerticalTable(badges, "date", null, true);
+	htmlText = htmlText + "</td><td>&nbsp;&nbsp;&nbsp;</td><td>";    
 	
 	badges.sort(patternVertSort);
-	htmlText = htmlText + createFilteredHorizontalTable(badges, "pattern", null, true);
+	htmlText = htmlText + createFilteredHorizontalTable(badges, "pattern", null, true, Math.floor((window.innerWidth-550)/140));
 	htmlText = htmlText + createFilteredVerticalTable(badges, "platform", null, true);
 	htmlText = htmlText + createFilteredVerticalTable(badges, "version", null, true);
+	htmlText = htmlText + "</td></tr></table>";    
+	//htmlText = htmlText + "<p>"+window.innerWidth+"<p>";    
     }
     document.getElementById(options.get('target')).innerHTML = htmlText;
 }

@@ -18,7 +18,20 @@ aliases: /industrial-edge/
   <img src="/images/logos/industrial-edge.png" class="pattern_logo" alt="Points">
 </div>
 
-{{< iframe "https://util.hybrid-cloud-patterns.io/dashboard.php?pattern=manuela" >}}
+<script type="text/javascript" src="/js/dashboard.js"></script>
+<div class='results'>
+  <p id="ci-dataset"> </p>
+  <script>
+    obtainBadges({ 'target':'ci-dataset', 'filter_field':'pattern', 'filter_value': 'manuela' });
+  </script>
+</div>
+
+---
+**NOTE**
+
+Industrial Edge on OpenShift Container Platform 4.12 fails CI due to a Seldon issue. This only affects the Anomaly Detection AI/ML portion of the pattern. The rest of the pattern functions as designed. For more information on the Seldon issue, see https://github.com/SeldonIO/seldon-core/issues/4339.
+
+---
 
 # Industrial Edge Pattern
 

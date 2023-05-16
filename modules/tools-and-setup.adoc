@@ -1,8 +1,9 @@
-:_content-type: CONCEPT
-:imagesdir: ../../images
-
 [id="contributing-to-docs-tools-and-setup"]
 = Install and set up the tools and software
+:icons:
+:linkattrs:
+:description: How to set up and install the tools to contribute
+
 
 == Create a GitHub account
 Before you can contribute to Hybrid Cloud Patterns documentation, you must
@@ -15,7 +16,6 @@ keys on GitHub] for authentication between your workstation and GitHub.
 
 Confirm authentication is working correctly with the following command:
 
-[source,terminal]
 ----
 $ ssh -T git@github.com
 ----

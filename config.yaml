@@ -15,10 +15,9 @@ markup:
   asciidocExt:
     attributes: {allow-uri-read, source-highlighter: rouge, icons: font, sectanchors}
     safeMode: unsafe
-    imagesdir: images
   tableOfContents:
     startLevel: 1
-    endLevel: 4
+    endLevel: 3
     ordered: false
   goldmark:
     renderer:
