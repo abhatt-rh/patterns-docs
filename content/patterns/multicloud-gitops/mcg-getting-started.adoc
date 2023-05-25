@@ -1,149 +1,23 @@
 ---
 title: Getting started
 weight: 10
-aliases: /multicloud-gitops/getting-started/
+aliases: /multicloud-gitops/mcg-getting-started/
 ---
 
 :toc:
 :imagesdir: /images
+:_content-type: ASSEMBLY
 
-:_content-type: PROCEDURE
-[id="mcg-getting-started_{context}"]
-= Getting started
+include::modules/mcg-deploying-mcg-pattern.adoc[leveloffset=1]
 
-[id="mcg-deploying-mcg-pattern_{context}"]
-== Deploying the Multicloud GitOps pattern
+[id="next-steps_mcg-getting-started"]
+== Next steps
 
-[discrete]
-=== Prerequisite
+After the management hub is set up and works correctly, attach one or more managed clusters to the architecture.
 
-* An OpenShift cluster
- ** To create an OpenShift cluster, go to the https://console.redhat.com/[Red Hat Hybrid Cloud console].
- ** Select *OpenShift \-> Clusters \-> Create cluster*.
- ** The cluster must have a dynamic `StorageClass` to provision `PersistentVolumes`. See link:../../multicloud-gitops/mcg-cluster-sizing[sizing your cluster].
-* Optional: A second OpenShift cluster for multicloud demonstration.
-* The git binary and podman. For details see https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[Installing Git] and https://podman.io/getting-started/installation[Installing Podman]
+For instructions on deploying the edge, refer to link:../mcg-managed-cluster/[Attach a managed cluster (edge) to the management hub].
 
-The use of this pattern depends on having at least one running Red Hat
-OpenShift cluster. It is desirable to have a cluster for deploying the GitOps
-management hub assets and a separate cluster(s) for the managed cluster(s).
+//For instructions on deploying the edge, refer to xref:/multicloud-gitops/mcg-managed-cluster.adoc#attach-managed-cluster[Attach a managed cluster (edge) to the management hub].
 
-If you do not have a running Red Hat OpenShift cluster, you can start one on a
-public or private cloud by using https://console.redhat.com/openshift/create[Red Hat's cloud
-service].
 
-[discrete]
-=== Procedure
-
-. Install the installation tooling dependencies. You will need:
-+
-. Fork the https://github.com/hybrid-cloud-patterns/multicloud-gitops[multicloud-gitops] repository on GitHub. It is recommended to fork because you can update your fork as part of the GitOps and DevOps processes.
-. Clone the forked copy of this repository.
-+
-[source,terminal]
-----
-git clone git@github.com:your-username/multicloud-gitops.git
-----
-
-. Create a local copy of the secret values file that can safely include credentials.
-+
-[WARNING]
-====
-Do not commit this file. You do not want to push personal credentials to GitHub.
- Note that if you do not want to customize the secrets, these steps are not needed.
- The framework generates a random password for the config-demo application.
-====
-+
-[source,terminal]
-----
-cp values-secret.yaml.template ~/values-secret-multicloud-gitops.yaml
-----
-+
-[source,terminal]
-----
-vi ~/values-secret-multicloud-gitops.yaml
-----
-
-. Customize the deployment for your cluster.
-+
-[source,terminal]
-----
-git checkout -b my-branch
-----
-+
-[source,terminal]
-----
-vi values-global.yaml
-----
-+
-[source,terminal]
-----
-git add values-global.yaml
-----
-+
-[source,terminal]
-----
-git commit values-global.yaml
-----
-+
-[source,terminal]
-----
-git push origin my-branch
-----
-
-. You can deploy the pattern by running `./pattern.sh make install` or by using the link:/infrastructure/using-validated-pattern-operator/[validated pattern operator].
-
-[id="deploying-the-cluster-by-using-the-pattern_sh-file-getting-started"]
-== Deploying the cluster by using the pattern.sh file
-
-To deploy the cluster by using the `pattern.sh` file, complete the following steps:
-
-. Login to your cluster by using the following command:
-+
-[source,terminal]
-----
- oc login
-----
-+
-Optional: set the `KUBECONFIG` variable to the `kubeconfig` filepath:
-+
-[source,terminal]
-----
- export KUBECONFIG=~/my-ocp-env/hub/auth/kubeconfig
-----
-
-. Deploy the pattern to your cluster.
-+
-[source,terminal]
-----
- ./pattern.sh make install
-----
-
-. Verify that the Operators have been installed.
- .. To verify, in the OpenShift Container Platform web console, navigate to *Operators → Installed Operators* page.
- .. Check that the Operator is installed in the `openshift-operators` namespace and its status is `Succeeded`.
-// Get a SME review for this step 5
-. Verify that all applications are synchronized. Under the project `multicloud-gitops-hub` click the URL for the `hub` gitops `server`. The Vault application is not synched.
-+
-image::multicloud-gitops/multicloud-gitops-argocd.png[Multicloud GitOps Hub]
-
-// Moved Deploying the managed cluster applications section under next step (or it should be a separate file
-
-[id="multicloud-gitops-application-demos-getting-started"]
-== Multicloud GitOps application demos
-
-As part of this pattern, HashiCorp Vault has been installed. Refer to the section on https://hybrid-cloud-patterns.io/secrets/vault/[Vault].
-
-// The Next steps heading is not inline with the chapter and only points to contribution links for help and feedback or bugs
-
-= Next steps
-
-After the management hub is set up and works correctly, attach one or more managed clusters to the architecture (see diagrams below).
-
-For instructions on deploying the edge, refer to https://hybrid-cloud-patterns.io/multicloud-gitops/managed-cluster/[Deploying the managed cluster applications].
-
-//to-do: Needs to move from this page
-//Contribute to this pattern:
-//https://groups.google.com/g/hybrid-cloud-patterns[Help & Feedback]
-//https://github.com/hybrid-cloud-patterns/multicloud-gitops/issues[Report Bugs]
 
