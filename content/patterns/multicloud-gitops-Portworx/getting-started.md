@@ -73,7 +73,7 @@ To deploy the cluster by using the `pattern.sh` file, complete the following ste
     or set `KUBECONFIG` to the path to your `kubeconfig` file. For example:
 
     ```sh
-    export KUBECONFIG=~/my-ocp-env/hub/auth/kubconfig
+    export KUBECONFIG=~/my-ocp-env/hub/auth/kubeconfig
     ```
 
 2. Deploy the pattern to your cluster.
@@ -103,7 +103,7 @@ As part of this pattern, HashiCorp Vault has been installed. Refer to the sectio
 
 After the management hub is set up and works correctly, attach one or more managed clusters to the architecture (see diagrams below).
 
-For instructions on deploying the edge, refer to [Managed Cluster Sites](https://hybrid-cloud-patterns.io/multicloud-gitops-Portworx/managed-cluster/).
+For instructions on deploying the edge, refer to [Managed Cluster Sites](https://hybrid-cloud-patterns.io/patterns/multicloud-gitops-portworx/managed-cluster/).
 
 >Contribute to this pattern:
 {{% button text="Help & Feedback" url="https://groups.google.com/g/hybrid-cloud-patterns" %}}
